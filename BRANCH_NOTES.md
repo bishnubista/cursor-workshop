@@ -1,5 +1,7 @@
 # Branch Notes: Chat and Context
 
+> **Note:** This is a forked version with personal modifications and improvements.
+
 ## Overview
 
 Cursor Chat is your AI pair programming partner. It's more than just a chatbot - it's a context-aware assistant that understands your codebase and can help you write, debug, and understand code.
