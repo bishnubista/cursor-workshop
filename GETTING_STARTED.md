@@ -132,8 +132,8 @@ For the best workshop experience, configure these settings:
    - Enable "Codebase Indexing"
 
 3. **Choose Your AI Model**
-   - Chat: Use GPT-4 or Claude Sonnet for best results
-   - Faster responses: Use GPT-3.5-turbo for quick questions
+   - Chat: Use Claude 3.5 Sonnet or GPT-4o for best results
+   - Faster responses: Use Claude 3 Haiku for quick questions
 
 ## Understanding Cursor's Main Features
 
