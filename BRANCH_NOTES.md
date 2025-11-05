@@ -1,330 +1,685 @@
-# Branch Notes: Custom Prompts and Rules
+# Branch Notes: GitHub CLI Integration
 
 ## Overview
 
-`.cursorrules` is Cursor's configuration file for customizing AI behavior. Use it to enforce coding standards, define project-specific patterns, and guide AI responses according to your team's preferences.
+GitHub CLI (`gh`) is a powerful command-line tool that brings GitHub functionality directly to your terminal. Combined with Cursor's AI capabilities, it streamlines your development workflow by enabling you to create PRs, manage issues, and interact with repositories without leaving your coding environment.
 
-## What is .cursorrules?
+## What is GitHub CLI?
 
-A `.cursorrules` file:
-- Lives in your project root
-- Contains instructions for Cursor AI
-- Applies to all AI features (Chat, Composer, Agent)
-- Enforces project-specific guidelines
-- Customizes AI behavior
+GitHub CLI (`gh`) is an official tool from GitHub that:
+- Creates and manages pull requests from the terminal
+- Creates, views, and manages issues
+- Runs GitHub Actions workflows
+- Clones and manages repositories
+- Reviews and merges PRs
+- Integrates seamlessly with git commands
 
-## Creating .cursorrules
+## Why Use GitHub CLI with Cursor?
 
-Create a file named `.cursorrules` in your project root:
+✅ **Stay in Flow** - Create PRs without context switching  
+✅ **AI-Powered Descriptions** - Use Cursor to generate PR descriptions  
+✅ **Faster Reviews** - View and comment on PRs in terminal  
+✅ **Automated Workflows** - Script common GitHub tasks  
+✅ **Better Collaboration** - Manage issues and discussions efficiently
 
-```
-project-root/
-├── .cursorrules  ← Create this file
-├── src/
-├── package.json
-└── README.md
-```
+## Installation
 
-## Basic Structure
+### macOS
 
-```.cursorrules
-# Project Information
-This is a Next.js 14 project using TypeScript, Tailwind CSS, and Prisma.
-
-# Coding Standards
-- Use functional components with TypeScript
-- Prefer named exports over default exports
-- Use async/await instead of .then()
-- Follow Airbnb style guide
-
-# File Organization
-- Components in src/components/
-- API routes in src/app/api/
-- Types in src/types/
-- Utils in src/lib/
-
-# Testing
-- Write tests using Jest and React Testing Library
-- Test files should be named *.test.tsx
-- Aim for 80% code coverage
+**Option 1: Using Homebrew (Recommended)**
+```bash
+brew install gh
 ```
 
-## Common Rules
-
-### 1. Technology Stack
-```
-We use:
-- Next.js 14 with App Router
-- TypeScript (strict mode)
-- Tailwind CSS for styling
-- Prisma for database
-- NextAuth for authentication
+**Option 2: Using MacPorts**
+```bash
+sudo port install gh
 ```
 
-### 2. Code Style
-```
-Code Style Rules:
-- Use 2-space indentation
-- Max line length: 100 characters
-- Use single quotes for strings
-- Add semicolons
-- Use trailing commas
+**Option 3: Using Conda**
+```bash
+conda install gh --channel conda-forge
 ```
 
-### 3. Component Patterns
-```
-React Component Rules:
-- All components must be TypeScript
-- Use React.FC type for functional components
-- Props interface named ComponentNameProps
-- Destructure props in function signature
-- Use React hooks (no class components)
+**Verify Installation:**
+```bash
+gh --version
 ```
 
-### 4. Error Handling
-```
-Error Handling:
-- All async functions must have try-catch
-- Use custom error classes
-- Log errors with context
-- Show user-friendly error messages
-- Never expose internal errors to users
+### Windows
+
+**Option 1: Using WinGet (Windows 10+)**
+```bash
+winget install --id GitHub.cli
 ```
 
-### 5. Testing Requirements
-```
-Testing:
-- Unit tests for all utilities
-- Integration tests for API routes
-- Component tests for all UI
-- E2E tests for critical paths
-- Mock external services
+**Option 2: Using Scoop**
+```bash
+scoop install gh
 ```
 
-### 6. Documentation
-```
-Documentation:
-- JSDoc for all exported functions
-- README for each major module
-- Inline comments for complex logic
-- API documentation with examples
-- Keep docs up-to-date
+**Option 3: Using Chocolatey**
+```bash
+choco install gh
 ```
 
-### 7. Security
-```
-Security Rules:
-- Validate all user input
-- Sanitize data before database queries
-- Use parameterized queries (no SQL injection)
-- Implement rate limiting on APIs
-- Never log sensitive information
-- Use environment variables for secrets
-```
+**Option 4: Manual Installation**
+1. Download the `.msi` installer from [GitHub CLI Releases](https://github.com/cli/cli/releases)
+2. Run the installer
+3. Follow the installation wizard
 
-## Advanced Rules
-
-### Framework-Specific
-
-**Next.js Project:**
-```
-Next.js Specific:
-- Use Server Components by default
-- Client Components only when needed (mark with 'use client')
-- Use Server Actions for mutations
-- Implement proper loading and error states
-- Use Next.js Image component for images
-- Follow Next.js file-based routing conventions
+**Verify Installation:**
+```bash
+gh --version
 ```
 
-**React Native:**
-```
-React Native:
-- Use StyleSheet.create for styles
-- Follow platform-specific guidelines
-- Test on both iOS and Android
-- Use Platform.select() for platform differences
-- Optimize for performance (memoization, lazy loading)
-```
+**Note for Windows:** After installation, restart your terminal (PowerShell, CMD, or Git Bash) to ensure `gh` is in your PATH.
 
-### Team Conventions
+## Initial Setup
 
-```
-Team Conventions:
-- Branch naming: feature/*, bugfix/*, hotfix/*
-- Commit format: type(scope): description
-- PR requires 2 approvals
-- All code must pass CI before merge
-- Update tests with code changes
+### 1. Authenticate with GitHub
+
+```bash
+gh auth login
 ```
 
-### Accessibility
+**Interactive Setup:**
+1. Choose: `GitHub.com` or `GitHub Enterprise Server`
+2. Preferred protocol: `HTTPS` or `SSH`
+3. Authenticate: `Login with a web browser` (recommended)
+4. Copy the one-time code shown
+5. Press Enter to open browser
+6. Paste code and authorize
 
-```
-Accessibility:
-- All interactive elements must have ARIA labels
-- Maintain 4.5:1 color contrast ratio
-- Support keyboard navigation
-- Test with screen readers
-- Follow WCAG 2.1 AA standards
-```
-
-## Real-World Examples
-
-### Example 1: Strict TypeScript Project
-```.cursorrules
-Project: E-commerce Platform
-
-Stack:
-- TypeScript (strict mode, no any types)
-- React 18 with TypeScript
-- Redux Toolkit for state
-- RTK Query for API calls
-- Material-UI for components
-
-Rules:
-1. All components must have TypeScript interfaces for props
-2. No `any` type - use `unknown` if type is truly unknown
-3. Explicit return types on all functions
-4. Use Redux Toolkit's createSlice for state
-5. API calls only through RTK Query
-6. All forms use React Hook Form with Zod validation
-7. Error boundaries around major feature areas
-8. Loading states for all async operations
-
-File Structure:
-- Features organized by domain (src/features/auth/, src/features/products/)
-- Each feature has: components/, hooks/, slices/, api/
-- Shared utilities in src/lib/
-- Type definitions in src/types/
+**Verify Authentication:**
+```bash
+gh auth status
 ```
 
-### Example 2: Microservices Backend
-```.cursorrules
-Project: Microservices Architecture
+### 2. Configure Git Integration
 
-Stack:
-- Node.js with Express
-- TypeScript
-- MongoDB with Mongoose
-- Redis for caching
-- RabbitMQ for messaging
+```bash
+# Set gh as default git protocol
+gh config set git_protocol https
+# Or use SSH
+gh config set git_protocol ssh
 
-Service Rules:
-1. Each service is independent (no direct service-to-service calls)
-2. Communication only via message queue
-3. Each service has own database
-4. Use dependency injection pattern
-5. Centralized logging to ELK stack
-6. Health check endpoint required
-7. Graceful shutdown handling
-8. Rate limiting on all public endpoints
-
-API Design:
-- RESTful conventions
-- Versioned APIs (/api/v1/)
-- Consistent error response format
-- Request/response logging
-- JWT authentication on protected routes
-- API documentation with Swagger
+# Set preferred editor for PR descriptions
+gh config set editor "cursor"
+# Or use your preferred editor
+gh config set editor "code"
+gh config set editor "vim"
 ```
 
-### Example 3: Mobile App
-```.cursorrules
-Project: Mobile Banking App
+### 3. Enable Auto-completion (Optional)
 
-Stack:
-- React Native
-- TypeScript
-- Redux for state
-- React Navigation
-- Async Storage
-
-Security Requirements:
-- All API calls must use HTTPS
-- Implement certificate pinning
-- Encrypt sensitive data locally
-- No console.log in production
-- Implement biometric authentication
-- Session timeout after 5 minutes
-- Secure token storage
-
-UX Requirements:
-- Loading indicators for all async operations
-- Offline support with sync when online
-- Pull-to-refresh on lists
-- Error messages user-friendly
-- Haptic feedback on important actions
-- Dark mode support
+**macOS (zsh):**
+```bash
+gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
 ```
 
-## Tips for Writing Rules
-
-### 1. Be Specific
-**Vague:** "Write good code"  
-**Specific:** "Use async/await for asynchronous code, not .then() chains"
-
-### 2. Provide Examples
-```
-Bad: const data = response.json()
-
-Good: const data = await response.json()
+**Windows (PowerShell):**
+```powershell
+gh completion -s powershell | Out-String | Invoke-Expression
 ```
 
-### 3. Explain Why
+## Essential Commands
+
+### Pull Requests
+
+#### Create a PR
+```bash
+# Create PR with interactive prompts
+gh pr create
+
+# Create PR with title and body
+gh pr create --title "Add user authentication" --body "Implements login and signup"
+
+# Create draft PR
+gh pr create --draft
+
+# Create PR targeting specific branch
+gh pr create --base main --head feature/auth
+
+# Create PR and open in browser
+gh pr create --web
 ```
-Use named exports instead of default exports.
-Reason: Better IDE support and easier refactoring.
+
+#### View PRs
+```bash
+# List open PRs
+gh pr list
+
+# List PRs with specific state
+gh pr list --state closed
+gh pr list --state merged
+
+# View PR details
+gh pr view 123
+gh pr view 123 --web
+
+# List your PRs
+gh pr list --author @me
+
+# List PRs assigned to you
+gh pr list --assignee @me
 ```
 
-### 4. Group Related Rules
-Organize by category (Style, Testing, Security, etc.)
+#### Review PRs
+```bash
+# Check out a PR locally
+gh pr checkout 123
 
-### 5. Keep Updated
-Review and update rules as project evolves
+# View PR diff
+gh pr diff 123
 
-## Testing Your Rules
+# Review a PR
+gh pr review 123 --approve
+gh pr review 123 --request-changes --body "Please add tests"
+gh pr review 123 --comment --body "Looks good overall"
+```
 
-After creating `.cursorrules`:
+#### Manage PRs
+```bash
+# Merge a PR
+gh pr merge 123
 
-1. Open Cursor Chat
-2. Ask: "What are the coding standards for this project?"
-3. Cursor should reference your rules
-4. Try generating code - it should follow your rules
+# Merge with options
+gh pr merge 123 --squash
+gh pr merge 123 --merge
+gh pr merge 123 --rebase
 
-## Common Use Cases
+# Close a PR
+gh pr close 123
 
-### 1. Onboarding
-New developers can ask Cursor about project conventions
+# Reopen a PR
+gh pr reopen 123
 
-### 2. Consistency
-Ensures all AI-generated code follows same standards
+# Mark as ready for review
+gh pr ready 123
+```
 
-### 3. Best Practices
-Enforces security, accessibility, performance guidelines
+### Issues
 
-### 4. Framework Conventions
-Guides AI to use framework-specific patterns
+```bash
+# Create an issue
+gh issue create --title "Bug: Login fails" --body "Description here"
 
-## Limitations
+# List issues
+gh issue list
 
-- Rules are guidelines, not hard constraints
-- AI may still deviate occasionally
-- Review AI-generated code always
-- Rules don't replace code review
-- Keep rules reasonable in scope
+# View issue
+gh issue view 456
+
+# Close issue
+gh issue close 456
+
+# Reopen issue
+gh issue reopen 456
+```
+
+### Repositories
+
+```bash
+# Clone repository
+gh repo clone username/repo
+
+# Create new repository
+gh repo create my-new-repo --public
+
+# View repository
+gh repo view
+
+# Fork repository
+gh repo fork username/repo
+```
+
+## PR Best Practices
+
+### 1. Concise Title
+
+**Format:** `type(scope): brief description`
+
+**Examples:**
+```
+feat(auth): add OAuth login
+fix(api): resolve timeout in user endpoint
+docs(readme): update installation steps
+refactor(utils): simplify date formatting
+test(cart): add unit tests for checkout
+```
+
+**Types:**
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation
+- `refactor`: Code refactoring
+- `test`: Adding tests
+- `chore`: Maintenance tasks
+- `style`: Formatting changes
+- `perf`: Performance improvements
+
+### 2. Detailed Summary
+
+A good PR description includes:
+
+**Template:**
+```markdown
+## Overview
+Brief explanation of what this PR does and why.
+
+## Changes
+- Added X feature
+- Modified Y component
+- Fixed Z bug
+- Removed deprecated A
+
+## Testing
+- [ ] Unit tests added/updated
+- [ ] Integration tests pass
+- [ ] Manual testing completed
+- [ ] Edge cases covered
+
+## Screenshots (if applicable)
+[Add screenshots for UI changes]
+
+## Breaking Changes
+List any breaking changes and migration steps.
+
+## Related Issues
+Fixes #123
+Related to #456
+
+## Checklist
+- [ ] Code follows project style guide
+- [ ] Tests added and passing
+- [ ] Documentation updated
+- [ ] No console errors or warnings
+- [ ] Reviewed own code
+```
+
+### 3. PR Rules
+
+**Before Creating PR:**
+- [ ] Branch is up to date with base branch
+- [ ] All tests pass locally
+- [ ] Code is linted and formatted
+- [ ] No debug code or console logs
+- [ ] Documentation updated
+
+**PR Content:**
+- [ ] Title is concise and descriptive
+- [ ] Description explains what, why, and how
+- [ ] Screenshots for UI changes
+- [ ] Breaking changes highlighted
+- [ ] Linked to related issues
+
+**Review Process:**
+- [ ] Request reviewers
+- [ ] Address feedback promptly
+- [ ] Mark conversations as resolved
+- [ ] Keep PR scope focused
+- [ ] Squash commits before merge (if required)
+
+### 4. PR Size Guidelines
+
+**Ideal PR:**
+- Changes: 200-400 lines
+- Files: 3-8 files
+- Time to review: 10-20 minutes
+
+**Too Large?**
+- Split into multiple PRs
+- Create feature branches
+- Use stacked PRs for dependencies
+
+## Cursor + GitHub CLI Workflow
+
+### Workflow 1: Feature Branch to PR
+
+```bash
+# 1. Create feature branch
+git checkout -b feat/user-profile
+
+# 2. Make changes in Cursor
+# ... code in Cursor ...
+
+# 3. Commit with descriptive message
+git add .
+git commit -m "feat(profile): add user profile page with avatar upload"
+
+# 4. Push branch
+git push -u origin feat/user-profile
+
+# 5. Create PR with detailed description
+gh pr create --title "feat(profile): add user profile page" \
+  --body "## Overview
+Implements user profile page with avatar upload functionality.
+
+## Changes
+- Created ProfilePage component
+- Added avatar upload with preview
+- Integrated with user API endpoint
+- Added profile update form with validation
+
+## Testing
+- [x] Unit tests added for form validation
+- [x] Integration test for profile update
+- [x] Manual testing completed
+- [x] Tested with different image formats
+
+## Screenshots
+[Add screenshot]
+
+Fixes #234"
+```
+
+### Workflow 2: Quick Fix
+
+```bash
+# 1. Create hotfix branch
+git checkout -b fix/login-redirect
+
+# 2. Fix bug in Cursor
+# ... make fix ...
+
+# 3. Commit and push
+git add .
+git commit -m "fix(auth): correct redirect after login"
+git push -u origin fix/login-redirect
+
+# 4. Create PR
+gh pr create --title "fix(auth): correct redirect after login" \
+  --body "Fixes redirect issue where users were sent to 404 after login. Now correctly redirects to dashboard." \
+  --assignee @me
+```
+
+### Workflow 3: Using Cursor AI for PR Descriptions
+
+**Step 1:** Make your changes in Cursor
+
+**Step 2:** Use Cursor Chat to generate PR description
+```
+Prompt: "Generate a detailed PR description for the changes I made. 
+Include overview, list of changes, testing checklist, and any breaking changes."
+```
+
+**Step 3:** Copy AI-generated description
+
+**Step 4:** Create PR with description
+```bash
+gh pr create --title "feat(dashboard): add analytics widgets" \
+  --body "$(pbpaste)"  # macOS
+# or
+gh pr create --title "feat(dashboard): add analytics widgets" \
+  --body "$(Get-Clipboard)"  # Windows PowerShell
+```
+
+### Workflow 4: Code Review from Terminal
+
+```bash
+# 1. List open PRs
+gh pr list
+
+# 2. Check out PR
+gh pr checkout 123
+
+# 3. Review code in Cursor
+# Open files and examine changes
+
+# 4. Run tests
+npm test
+
+# 5. Approve or request changes
+gh pr review 123 --approve --body "LGTM! Great implementation of the feature."
+
+# or request changes
+gh pr review 123 --request-changes --body "Please add error handling for API failures"
+```
+
+## Advanced Tips
+
+### 1. PR Templates
+
+Create `.github/pull_request_template.md`:
+```markdown
+## Description
+<!-- Explain what this PR does -->
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Testing
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Manual testing
+
+## Checklist
+- [ ] Code follows style guide
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] No breaking changes (or documented)
+```
+
+Then PR creation will auto-populate with template.
+
+### 2. Aliases for Common Commands
+
+Add to `.zshrc` or `.bashrc`:
+```bash
+# PR shortcuts
+alias prc='gh pr create'
+alias prl='gh pr list'
+alias prv='gh pr view'
+alias prm='gh pr merge --squash'
+
+# Quick PR with Cursor
+alias prq='git push && gh pr create --fill'
+```
+
+### 3. View PR in Cursor
+
+```bash
+# Checkout PR and open in Cursor
+gh pr checkout 123 && cursor .
+```
+
+### 4. Bulk Operations
+
+```bash
+# List all your open PRs
+gh pr list --author @me --state open
+
+# Close multiple stale PRs
+gh pr list --author @me --state open --json number --jq '.[].number' | \
+  xargs -I {} gh pr close {}
+
+# View all PRs needing review
+gh pr list --label "needs-review"
+```
+
+### 5. CI/CD Integration
+
+```bash
+# View PR status checks
+gh pr checks 123
+
+# Wait for checks to pass
+gh pr checks 123 --watch
+
+# Re-run failed checks
+gh run rerun 456
+```
+
+## Common Patterns
+
+### Pattern 1: Draft PR for Early Feedback
+
+```bash
+# Push work-in-progress code
+git push -u origin feature/new-dashboard
+
+# Create draft PR
+gh pr create --draft \
+  --title "WIP: Redesign dashboard" \
+  --body "Early version for feedback on layout and structure. Not ready for full review."
+
+# Mark ready when complete
+gh pr ready
+```
+
+### Pattern 2: Stacked PRs
+
+```bash
+# Base feature
+git checkout -b feat/api-base
+# ... make changes ...
+gh pr create --base main
+
+# Dependent feature
+git checkout -b feat/api-advanced
+# ... make changes ...
+gh pr create --base feat/api-base
+```
+
+### Pattern 3: Quick Hotfix
+
+```bash
+# Create branch, fix, and PR in one flow
+git checkout -b fix/critical-bug && \
+  # ... make fix in Cursor ... && \
+  git add . && \
+  git commit -m "fix: resolve critical login bug" && \
+  git push -u origin fix/critical-bug && \
+  gh pr create --title "fix: resolve critical login bug" \
+    --body "Emergency fix for production login issue" \
+    --assignee @me \
+    --label "urgent"
+```
+
+## Troubleshooting
+
+### Authentication Issues
+
+```bash
+# Re-authenticate
+gh auth login
+
+# Check auth status
+gh auth status
+
+# Refresh token
+gh auth refresh
+```
+
+### PR Creation Fails
+
+```bash
+# Ensure you're on the correct branch
+git branch --show-current
+
+# Ensure branch is pushed
+git push -u origin $(git branch --show-current)
+
+# Check if remote repository exists
+gh repo view
+```
+
+### Permission Errors
+
+```bash
+# Check your permissions
+gh api repos/:owner/:repo --jq '.permissions'
+
+# Ensure you have push access
+gh repo view --json permissions
+```
+
+## Integration with Cursor
+
+### 1. Use Cursor for PR Descriptions
+
+Ask Cursor Chat:
+```
+"Review my recent commits and generate a comprehensive PR description following our team's template"
+```
+
+### 2. Code Review Assistance
+
+After checking out a PR:
+```
+"Analyze the changes in this PR and identify potential issues or improvements"
+```
+
+### 3. Automated Testing
+
+```
+"Write tests for the changes in this PR"
+```
+
+### 4. Documentation
+
+```
+"Update documentation to reflect the changes in this PR"
+```
+
+## Best Practices Checklist
+
+### Before Creating PR:
+- [ ] Code is complete and tested
+- [ ] Branch is up-to-date with main
+- [ ] All tests pass
+- [ ] Code is linted
+- [ ] No debug statements
+- [ ] Documentation updated
+
+### PR Title:
+- [ ] Follows conventional commits format
+- [ ] Concise (50 characters or less)
+- [ ] Clear and descriptive
+- [ ] Includes scope when relevant
+
+### PR Description:
+- [ ] Explains what and why
+- [ ] Lists all changes
+- [ ] Includes testing checklist
+- [ ] Has screenshots for UI changes
+- [ ] Notes breaking changes
+- [ ] Links related issues
+
+### Review Process:
+- [ ] Request appropriate reviewers
+- [ ] Label PR correctly
+- [ ] Assign to milestone/project
+- [ ] Respond to feedback promptly
+- [ ] Keep PR scope focused
+- [ ] Resolve all conversations
+
+## Resources
+
+- [GitHub CLI Documentation](https://cli.github.com/manual/)
+- [GitHub CLI Repository](https://github.com/cli/cli)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)
+- [The Art of the Pull Request](https://hackernoon.com/the-art-of-pull-requests-6f0f099850f9)
 
 ## Next Steps
 
-Congratulations! You've completed the Cursor workshop!
+**Practice:**
+1. Install and authenticate GitHub CLI
+2. Create your first PR from terminal
+3. Review a PR using `gh`
+4. Experiment with different workflows
 
-**Continue Learning:**
-- Apply these skills to your projects
-- Explore Cursor documentation
-- Join Cursor community
-- Share your learnings
-- Build amazing things!
+**Advanced:**
+1. Set up PR templates
+2. Create custom aliases
+3. Integrate with CI/CD
+4. Automate common tasks
 
 ---
 
-See **TASK.md** for customization exercises!
+See **TASK.md** for hands-on exercises!
