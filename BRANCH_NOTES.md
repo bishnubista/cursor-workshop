@@ -217,10 +217,12 @@ Access chat settings through the gear icon:
 
 Different models have different strengths:
 
-- **GPT-4** - Best for complex reasoning and architecture
-- **Claude Sonnet** - Great balance of speed and quality
-- **GPT-3.5-turbo** - Fastest, good for simple questions
-- **Claude Opus** - Most capable, best for complex tasks
+- **Claude 3.5 Sonnet** - Best overall balance, most commonly used
+- **GPT-4o** - Fast and capable, excellent for most tasks
+- **Claude 3 Opus** - Most capable, best for complex reasoning
+- **o1-preview** - Advanced reasoning for very complex problems
+- **GPT-4 Turbo** - Previous generation, still excellent
+- **Claude 3 Haiku** - Fastest responses for simple tasks
 
 Choose based on your task complexity and speed needs.
 
