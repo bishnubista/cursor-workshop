@@ -1,0 +1,64 @@
+# Cursor Workshop Repository Rules
+
+## Project Type
+This is an educational workshop repository teaching Cursor IDE features through hands-on exercises.
+
+## Repository Structure
+- main branch: Overview and getting started guide
+- Feature branches (01-09): Each teaches a specific Cursor feature
+- Each branch contains: BRANCH_NOTES.md, TASK.md, and sample code
+
+## Branch Naming Convention
+- Beginner: 01-03 (basic features)
+- Intermediate: 04-06 (advanced features)
+- Advanced: 07-09 (power user features)
+
+## Content Guidelines
+
+### BRANCH_NOTES.md
+- Comprehensive explanation of the feature
+- Use cases and examples
+- Best practices
+- Keyboard shortcuts
+- Tips and tricks
+- Links to next steps
+
+### TASK.md
+- Hands-on exercises
+- Clear objectives
+- Expected outcomes
+- Self-assessment checklist
+- Progressive difficulty
+
+### Sample Code
+- Intentionally simple for learning
+- Demonstrates feature concepts
+- Includes common patterns
+- Has room for improvement (for practice)
+
+## Code Style for Examples
+- Clear and readable over clever
+- Well-commented
+- Demonstrates both good and bad practices (in appropriate files)
+- Multiple difficulty levels
+
+## Documentation Standards
+- Write for beginners but include advanced tips
+- Use clear, jargon-free language
+- Provide examples for every concept
+- Include visual cues (✅ ❌ 💡)
+- Link related concepts
+
+## Educational Approach
+- Learn by doing
+- Progressive complexity
+- Immediate feedback
+- Real-world applications
+- Encourage experimentation
+
+## Maintenance
+- Keep content up-to-date with Cursor releases
+- Update based on user feedback
+- Ensure all exercises remain relevant
+- Test exercises work as intended
+
